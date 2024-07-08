@@ -14,7 +14,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v2
 
     - name: Upload image to Azure Blob Storage
       env:
@@ -22,7 +22,7 @@ jobs:
         AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
       run: |
         IMAGE_PATH=${{ github.event.inputs.image-path }}
-        CONTAINER_NAME=your-container-name  # Replace with your Azure Blob container name
+        CONTAINER_NAME=download  # Use the actual Azure Blob container name you created
         BLOB_NAME=$(basename $IMAGE_PATH)
         
         # Install Azure CLI
@@ -35,6 +35,7 @@ jobs:
           --container-name $CONTAINER_NAME \
           --name $BLOB_NAME \
           --file $IMAGE_PATH
+
 
 
 
