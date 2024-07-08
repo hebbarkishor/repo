@@ -1,10 +1,10 @@
 name: download profile
 
-events:
-  on:
-    workflow_dispatch
 
-job:
+on:
+  workflow_dispatch
+
+jobs:
  download:
   runs_on: ubuntu-latest
 
@@ -12,9 +12,9 @@ job:
   - name: Checkout
     uses: actions/checkout@v4.1.7
 
-steps:
-- name: download
-  uses: echo "download image"
+  steps:
+  - name: download
+    uses: echo "download image"
 
 
 
