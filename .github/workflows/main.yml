@@ -6,7 +6,7 @@ on:
       image-path:
         description: 'Path to the image file'
         required: true
-        default: 'download.jpg'  # Set a default path if you have a default image
+        default: 'download.jpg' 
 
 jobs:
   upload:
