@@ -14,7 +14,7 @@ jobs:
 
   
   - name: download
-    uses: echo "download image"
+    runs: echo "download image"
 
 
 
