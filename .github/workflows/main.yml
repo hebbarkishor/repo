@@ -1,21 +1,41 @@
-name: download profile
-
+name: Upload Image to Azure Blob Storage
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      image-path:
+        description: 'Path to the image file'
+        required: true
+        default: 'download.jpg'  # Set a default path if you have a default image
 
 jobs:
- download:
-  runs-on: ubuntu-latest
+  upload:
+    runs-on: ubuntu-latest
 
-  steps:
-  - name: Checkout
-    uses: actions/checkout@v4.1.7
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4.1.7
 
-  
-  - name: download
-    run: 
-      echo "download image"
+    - name: Upload image to Azure Blob Storage
+      env:
+        AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
+        AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
+      run: |
+        IMAGE_PATH=${{ github.event.inputs.image-path }}
+        CONTAINER_NAME=your-container-name  # Replace with your Azure Blob container name
+        BLOB_NAME=$(basename $IMAGE_PATH)
+        
+        # Install Azure CLI
+        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+        
+        # Upload image to Azure Blob Storage
+        az storage blob upload \
+          --account-name $AZURE_STORAGE_ACCOUNT_NAME \
+          --account-key $AZURE_STORAGE_ACCOUNT_KEY \
+          --container-name $CONTAINER_NAME \
+          --name $BLOB_NAME \
+          --file $IMAGE_PATH
+
 
 
 
